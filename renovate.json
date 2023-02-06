@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":semanticCommits",
+    ":disableDependencyDashboard"
+  ],
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 0,
+  "rebaseWhen": "auto",
+  "regexManagers": [
+    {
+      "fileMatch": ["config/apps\\.yaml$"],
+      "matchStrings": ["  ([^ :]+):\\n    repoURL: (?<registryUrl>.+)\\n    chartName: (?<depName>.+?)\\n    chartVersion: (?<currentValue>.+?)\\n"],
+      "datasourceTemplate": "helm"
+    }
+  ],
+  "argocd": {
+    "fileMatch": ["applications/base/*/.+\\.yaml$"]
+  }
+}
